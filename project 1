@@ -1,0 +1,29 @@
+In this project I answer some question about DVD rental , and through answering them , I learn how to deal with sql elements , 
+how to write a query , using JOIN , AGGREGATION , MIN , MAX and so on .
+
+
+-- HERE IS SOME EXAMPLES OF THE QUERIES --
+
+#What is the rental duration for the category id >= 15 and their max rate?
+
+select distinct rental_duration  ,
+max( rental_rate) over (order by release_year ) as Max_rate
+from film 
+join film_category 
+on film.film_id = film_category.film_id 
+where category_id  >= 15 ;
+                                                                                  
+                         
+
+---------------------------------------------
+
+#What is the lowest film rate that his title starts with A ?
+
+
+SELECT min(rental_rate) as lowest_film_rate
+FROM film                                                            
+WHERE film_id IN                                               
+(SELECT c.film_id                                                 
+ from film f join film_category c                       
+ on c.film_id = f.film_id                                      
+ WHERE film.title like 'A%' ) ;  
